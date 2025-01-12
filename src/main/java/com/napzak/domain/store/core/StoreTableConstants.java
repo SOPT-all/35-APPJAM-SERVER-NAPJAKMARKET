@@ -1,7 +1,7 @@
-package com.napzak.domain.member.core;
+package com.napzak.domain.store.core;
 
-public class MemberTableConstants {
-	public final static String TABLE_MEMBER = "member";
+public class StoreTableConstants {
+	public final static String TABLE_STORE = "store";
 	public final static String COLUMN_ID = "id";
 	public final static String COLUMN_NICKNAME = "nickname";
 	public final static String COLUMN_PHONE = "phone";

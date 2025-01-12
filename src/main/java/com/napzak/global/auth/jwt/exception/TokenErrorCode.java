@@ -15,7 +15,7 @@ public enum TokenErrorCode implements BaseErrorCode {
 	400 BAD REQUEST
 	 */
 	INVALID_REFRESH_TOKEN_ERROR(HttpStatus.BAD_REQUEST, "잘못된 리프레쉬 토큰입니다"),
-	REFRESH_TOKEN_MEMBER_ID_MISMATCH_ERROR(HttpStatus.BAD_REQUEST, "리프레쉬 토큰의 사용자 정보가 일치하지 않습니다"),
+	REFRESH_TOKEN_STORE_ID_MISMATCH_ERROR(HttpStatus.BAD_REQUEST, "리프레쉬 토큰의 사용자 정보가 일치하지 않습니다"),
 	UNSUPPORTED_REFRESH_TOKEN_ERROR(HttpStatus.BAD_REQUEST, "지원하지 않는 리프레쉬 토큰입니다"),
 	REFRESH_TOKEN_EMPTY_ERROR(HttpStatus.BAD_REQUEST, "리프레쉬 토큰이 비어있습니다"),
 	REFRESH_TOKEN_SIGNATURE_ERROR(HttpStatus.BAD_REQUEST, "리프레쉬 토큰의 서명의 잘못 되었습니다"),

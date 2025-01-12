@@ -9,7 +9,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.napzak.domain.member.core.Role;
+import com.napzak.domain.store.core.Role;
 import com.napzak.global.auth.jwt.filter.JwtAuthenticationFilter;
 import com.napzak.global.auth.security.CustomAccessDeniedHandler;
 import com.napzak.global.auth.security.CustomJwtAuthenticationEntryPoint;
@@ -33,6 +33,7 @@ public class SecurityConfig {
 		"/swagger-resources/**",
 		"/api/files/**",
 		"/error",
+		"/api/stores/login/**",
 		"/"
 	};
 

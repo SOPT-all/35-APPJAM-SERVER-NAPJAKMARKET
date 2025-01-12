@@ -1,4 +1,4 @@
-package com.napzak.domain.member.core;
+package com.napzak.domain.store.core;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,8 +7,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum SocialType {
 	KAKAO("KAKAO"),
-	APPLE("APPLE"),
-	;
+	APPLE("APPLE");
+
 
 	private final String type;
 }

@@ -1,4 +1,4 @@
-package com.napzak.domain.member.core;
+package com.napzak.domain.store.core;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum Role {
 
-	MEMBER("ROLE_MEMBER"),
+	STORE("ROLE_STORE"),
 	ADMIN("ROLE_ADMIN");
 
 	private final String roleName;

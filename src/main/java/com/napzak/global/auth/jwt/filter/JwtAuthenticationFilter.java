@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.napzak.domain.member.core.Role;
+import com.napzak.domain.store.core.Role;
 import com.napzak.global.auth.jwt.provider.JwtTokenProvider;
 import com.napzak.global.auth.jwt.provider.JwtValidationType;
 import com.napzak.global.auth.security.AdminAuthentication;
@@ -62,16 +62,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 	}
 
 	private void setAuthentication(String token, HttpServletRequest request) {
-		Long memberId = jwtTokenProvider.getMemberIdFromJwt(token);
+		Long storeId = jwtTokenProvider.getStoreIdFromJwt(token);
 		Role role = jwtTokenProvider.getRoleFromJwt(token);
 
-		log.info("Setting authentication for memberId: {} with role: {}", memberId, role);
+		log.info("Setting authentication for storeId: {} with role: {}", storeId, role);
 
 		Collection<GrantedAuthority> authorities = List.of(role.toGrantedAuthority());
-		UsernamePasswordAuthenticationToken authentication = createAuthentication(memberId, authorities, role);
+		UsernamePasswordAuthenticationToken authentication = createAuthentication(storeId, authorities, role);
 		authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
-		log.info("Authentication set: memberId: {}, role: {}", memberId, role);
+		log.info("Authentication set: storeId: {}, role: {}", storeId, role);
 
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 	}
@@ -86,16 +86,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 		}
 	}
 
-	private UsernamePasswordAuthenticationToken createAuthentication(Long memberId,
+	private UsernamePasswordAuthenticationToken createAuthentication(Long storeId,
 		Collection<GrantedAuthority> authorities, Role role) {
-		log.info("Creating authentication for memberId: {} with role: {}", memberId, role);
+		log.info("Creating authentication for storeId: {} with role: {}", storeId, role);
 
 		if (role == Role.ADMIN) {
-			log.info("Creating AdminAuthentication for memberId: {}", memberId);
-			return new AdminAuthentication(memberId.toString(), null, authorities);
-		} else if (role == Role.MEMBER) {
-			log.info("Creating MemberAuthentication for memberId: {}", memberId);
-			return new MemberAuthentication(memberId.toString(), null, authorities);
+			log.info("Creating AdminAuthentication for storeId: {}", storeId);
+			return new AdminAuthentication(storeId.toString(), null, authorities);
+		} else if (role == Role.STORE) {
+			log.info("Creating StoreAuthentication for storeId: {}", storeId);
+			return new MemberAuthentication(storeId.toString(), null, authorities);
 		}
 		log.error("Unknown role: {}", role);
 		throw new IllegalArgumentException("Unknown role: " + role);

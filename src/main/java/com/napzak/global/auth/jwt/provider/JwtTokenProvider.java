@@ -11,7 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
-import com.napzak.domain.member.core.Role;
+import com.napzak.domain.store.core.Role;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -37,8 +37,9 @@ public class JwtTokenProvider {
 	@Value("${jwt.refresh-token-expire-time}")
 	private long refreshTokenExpireTime;
 
-	private static final String MEMBER_ID = "memberId";
+	private static final String STORE_ID = "storeId";
 	private static final String ROLE_KEY = "role";
+	private static final String NICKNAME = "nickname";
 
 	@PostConstruct
 	protected void init() {
@@ -75,14 +76,14 @@ public class JwtTokenProvider {
 		}
 	}
 
-	public Long getMemberIdFromJwt(String token) {
+	public Long getStoreIdFromJwt(String token) {
 		Claims claims = getBody(token);
-		Long memberId = Long.valueOf(claims.get(MEMBER_ID).toString());
+		Long storeId = Long.valueOf(claims.get(STORE_ID).toString());
 
-		// 로그 추가: memberId 확인
-		log.info("Extracted memberId from JWT: {}", memberId);
+		// 로그 추가: storeId 확인
+		log.info("Extracted storeId from JWT: {}", storeId);
 
-		return memberId;
+		return storeId;
 	}
 
 	public Role getRoleFromJwt(String token) {
@@ -103,8 +104,8 @@ public class JwtTokenProvider {
 
 		final Claims claims = Jwts.claims().setIssuedAt(now).setExpiration(new Date(now.getTime() + expiredTime));
 
-		claims.put(MEMBER_ID, authentication.getPrincipal());
-		log.info("Added member ID to claims: {}", authentication.getPrincipal());
+		claims.put(STORE_ID, authentication.getPrincipal());
+		log.info("Added store ID to claims: {}", authentication.getPrincipal());
 		log.info("Authorities before token generation: {}", authentication.getAuthorities());
 
 		String role = authentication.getAuthorities()
@@ -132,5 +133,15 @@ public class JwtTokenProvider {
 	private SecretKey getSigningKey() {
 		String encodedKey = Base64.getEncoder().encodeToString(jwtSecret.getBytes());
 		return Keys.hmacShaKeyFor(encodedKey.getBytes());
+	}
+
+	public String getNicknameFromJwt(String token) {
+		Claims claims = getBody(token);
+		String nickname = claims.get(NICKNAME).toString();
+
+		// 로그 추가: nickname 확인
+		log.info("Extracted nickname from JWT: {}", nickname);
+
+		return nickname;
 	}
 }
